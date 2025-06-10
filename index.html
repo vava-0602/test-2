@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미래를 바꾸는 환경 진로 탐험</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F0F9FF;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            height: 320px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            background-color: #0096C7;
+            transform: translateY(-2px);
+        }
+        .career-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .career-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            border-color: #48CAE4;
+        }
+        .flow-step {
+            transition: all 0.3s ease;
+        }
+        .flow-step:hover {
+            background-color: #E0F7FA;
+        }
+        .flow-connector::after {
+            content: '👇';
+            display: block;
+            text-align: center;
+            font-size: 2rem;
+            color: #0077B6;
+            margin: 0.5rem 0;
+            opacity: 0.8;
+        }
+        .pyramid-level {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            clip-path: polygon(15% 0, 85% 0, 100% 100%, 0% 100%);
+            margin-bottom: -1px;
+        }
+    </style>
+</head>
+<body class="text-gray-700">
+
+    <header class="bg-[#03045E] sticky top-0 z-50 shadow-lg">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="text-white text-2xl font-black">
+                <a href="#hero">🌍 E.C.O. 진로 탐험</a>
+            </div>
+            <div class="hidden md:flex space-x-2">
+                <a href="#opportunity" class="nav-button text-white px-4 py-2 rounded-md font-semibold">새로운 기회</a>
+                <a href="#careers" class="nav-button text-white px-4 py-2 rounded-md font-semibold">미래 직업</a>
+                <a href="#roadmap" class="nav-button text-white px-4 py-2 rounded-md font-semibold">성장 로드맵</a>
+                <a href="#skills" class="nav-button text-white px-4 py-2 rounded-md font-semibold">필수 역량</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="bg-cover bg-center py-20 px-4 text-center" style="background-image: linear-gradient(rgba(0, 119, 182, 0.8), rgba(3, 4, 94, 0.85))">
+            <h1 class="text-4xl md:text-6xl text-white font-extrabold mb-4">미래를 바꾸는 오늘의 선택</h1>
+            <p class="text-xl md:text-2xl text-[#ADE8F4] font-light max-w-3xl mx-auto">기후 위기는 우리 모두의 과제이지만, 동시에 여러분의 미래를 빛낼 새로운 기회가 숨어있습니다.<br>탄소중립 시대의 주인공이 될 준비가 되셨나요?</p>
+        </section>
+        
+        <section id="opportunity" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-[#03045E]">새로운 시대, 새로운 기회</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-12">탄소중립으로의 전환은 단순한 환경 보호를 넘어, 미래 경제의 지도를 바꾸고 있습니다. 특히 '녹색 일자리'는 놀라운 성장 잠재력을 보여주며 미래 세대에게 새로운 가능성을 열어주고 있습니다.</p>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="bg-[#F0F9FF] p-6 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-center mb-4 text-[#0077B6]">녹색 투자의 놀라운 일자리 창출 효과</h3>
+                        <p class="text-center mb-4">같은 비용을 투자했을 때, 녹색 산업은 기존 화석 연료 산업보다 월등히 많은 일자리를 만들어냅니다. 이는 미래 경제의 중심이 어디로 이동하고 있는지를 명확하게 보여줍니다.</p>
+                        <div class="chart-container">
+                            <canvas id="jobCreationChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-[#F0F9FF] p-6 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-center mb-4 text-[#0077B6]">미래 직업의 필수 조건: 높은 전문성</h3>
+                         <p class="text-center mb-4">미래의 녹색 일자리는 더 높은 수준의 지식과 기술을 요구합니다. 지금 여러분이 배우는 모든 것이 미래의 전문가가 되기 위한 소중한 밑거름이 됩니다.</p>
+                        <div class="chart-container">
+                            <canvas id="skillLevelChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="careers" class="py-16">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-[#03045E]">미래를 이끌어갈 환경 직업들</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-12">에너지, 기술, 데이터, 금융 등 사회 모든 분야에서 환경을 지키는 멋진 직업들이 여러분을 기다리고 있습니다. 어떤 분야에 관심이 가나요?</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">⚡️</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">신재생에너지 전문가</h3>
+                        <p>태양, 바람, 물 등 자연의 힘으로 깨끗한 전기를 만드는 기술을 개발하고 관리해요.</p>
+                    </div>
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">🔬</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">환경공학자</h3>
+                        <p>오염된 물과 공기를 정화하고, 쓰레기를 자원으로 재탄생시키는 기술을 연구해요.</p>
+                    </div>
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">♻️</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">자원순환 전문가</h3>
+                        <p>버려지는 물건에 아이디어를 더해 완전히 새로운 제품으로 만드는 '업사이클링'의 마법사예요.</p>
+                    </div>
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">🏢</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">녹색 건축 전문가</h3>
+                        <p>에너지를 아끼고, 사람과 자연 모두에게 건강한 친환경 건물을 설계하고 지어요.</p>
+                    </div>
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">📈</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">환경 데이터 분석가</h3>
+                        <p>인공위성, 드론의 데이터를 분석해 기후 변화를 예측하고 문제 해결의 실마리를 찾아요.</p>
+                    </div>
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">💡</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">환경 컨설턴트</h3>
+                        <p>기업이 친환경적으로 성장할 수 있도록 전략을 짜주는 '환경 문제 해결사' 역할을 해요.</p>
+                    </div>
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">💰</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">탄소배출권 거래 전문가</h3>
+                        <p>탄소 배출 권리를 사고 파는 시장에서 기업들의 거래를 돕는 금융 전문가예요.</p>
+                    </div>
+                    <div class="career-card bg-white p-6 rounded-lg text-center shadow-md">
+                        <div class="text-6xl mb-4">🧑‍🏫</div>
+                        <h3 class="text-xl font-bold mb-2 text-[#0077B6]">환경교육사</h3>
+                        <p>사람들에게 환경의 소중함을 알리고, 모두가 실천할 수 있도록 돕는 길잡이가 돼요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap" class="py-16 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-[#03045E]">환경 전문가 성장 로드맵: M.A.K.E.R.</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-12">미래 환경 전문가가 되는 길, 체계적인 5단계 활동을 통해 여러분의 꿈을 현실로 만들 수 있습니다. 한 걸음씩 따라오세요!</p>
+                <div class="max-w-2xl mx-auto">
+                    <div class="flow-step bg-white rounded-lg p-6 mb-2 shadow-lg border-l-4 border-[#00B4D8]">
+                        <h3 class="text-2xl font-bold text-[#0077B6]">M <span class="text-xl font-semibold text-gray-700">- Make Sense (개념 이해)</span></h3>
+                        <p>기후 위기와 탄소중립이 왜 중요한지, 우리 삶에 어떤 영향을 미치는지 깊이 있게 이해해요.</p>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step bg-white rounded-lg p-6 mb-2 shadow-lg border-l-4 border-[#0096C7]">
+                        <h3 class="text-2xl font-bold text-[#0077B6]">A <span class="text-xl font-semibold text-gray-700">- Analyze (정보 탐색)</span></h3>
+                        <p>AI 튜터, 다양한 미디어를 활용해 관심 있는 직업과 기술에 대해 스스로 정보를 탐색하고 분석해요.</p>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step bg-white rounded-lg p-6 mb-2 shadow-lg border-l-4 border-[#0077B6]">
+                        <h3 class="text-xl font-bold text-[#0077B6]">K <span class="text-xl font-semibold text-gray-700">- Know-how (아이디어 표현)</span></h3>
+                        <p>포스터, 웹툰, 영상 등 창의적인 방법으로 환경 문제 해결을 위한 나만의 아이디어를 표현해요.</p>
+                    </div>
+                    <div class="flow-connector"></div>
+                    <div class="flow-step bg-white rounded-lg p-6 mb-2 shadow-lg border-l-4 border-[#023E8A]">
+                        <h3 class="text-xl font-bold text-[#0077B6]">E <span class="text-xl font-semibold text-gray-700">- Exhibit (공유와 실천)</span></h3>
+                        <p>나의 아이디어를 친구, 가족, 지역사회와 공유하고 함께 실천하는 캠페인을 열어요.</p>
+                    </div>
+                     <div class="flow-connector"></div>
+                    <div class="flow-step bg-white rounded-lg p-6 shadow-lg border-l-4 border-[#03045E]">
+                        <h3 class="text-xl font-bold text-[#0077B6]">R <span class="text-xl font-semibold text-gray-700">- Reflect (성찰과 성장)</span></h3>
+                        <p>모든 활동을 되돌아보며 배운 점을 정리하고, 앞으로의 진로 계획을 세우며 한 뼘 더 성장해요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20">
+            <div class="container mx-auto px-6">
+                 <h2 class="text-3xl md:text-4xl font-bold text-center mb-4 text-[#03045E]">미래 인재의 필수 역량</h2>
+                <p class="text-lg text-center max-w-3xl mx-auto mb-12">미래 환경 전문가는 한 가지 지식만으로는 부족해요. 다양한 문제를 해결하고 여러 사람과 협력할 수 있는 종합적인 능력이 필요합니다.</p>
+                <div class="max-w-lg mx-auto">
+                    <div class="pyramid-level" style="background-color: #03045E; width: 100%;">융합적 사고 능력</div>
+                    <div class="pyramid-level" style="background-color: #0077B6; width: 85%;">창의적 문제 해결 능력</div>
+                    <div class="pyramid-level" style="background-color: #0096C7; width: 70%;">디지털 & 데이터 분석 능력</div>
+                    <div class="pyramid-level" style="background-color: #00B4D8; width: 55%;">의사소통 및 협업 능력</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#03045E] text-white text-center py-10">
+        <h2 class="text-3xl font-bold mb-4">세상을 바꾸는 당신의 첫걸음</h2>
+        <p class="text-lg mb-6">환경을 위한 여러분의 관심과 도전이 지속가능한 미래를 만듭니다.<br>지금 바로, 나만의 E.C.O. 진로 탐험을 시작하세요!</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                  return label.join(' ');
+                }
+                return label;
+            };
+
+            const jobCtx = document.getElementById('jobCreationChart').getContext('2d');
+            new Chart(jobCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['녹색 산업', '화석 연료 산업'],
+                    datasets: [{
+                        label: '100만 달러 투자 시 창출 일자리 (개)',
+                        data: [25, 5.3],
+                        backgroundColor: ['#48CAE4', '#ADB5BD'],
+                        borderColor: ['#00B4D8', '#6C757D'],
+                        borderWidth: 2,
+                        borderRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
+                    },
+                    scales: {
+                        x: { 
+                            beginAtZero: true,
+                            grid: { color: '#E0F7FA' },
+                            ticks: { font: { weight: 'bold' } }
+                        },
+                        y: { 
+                            grid: { display: false },
+                            ticks: { font: { size: 14, weight: 'bold' } }
+                        }
+                    }
+                }
+            });
+
+            const skillCtx = document.getElementById('skillLevelChart').getContext('2d');
+            new Chart(skillCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['높은 숙련도 요구', '보통 수준 숙련도'],
+                    datasets: [{
+                        data: [62, 38],
+                        backgroundColor: ['#0077B6', '#90E0EF'],
+                        borderColor: '#F0F9FF',
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { size: 14 } } },
+                        tooltip: { callbacks: { title: tooltipTitleCallback } }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+```
